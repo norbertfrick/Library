@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Library.Core.Abstractions;
+using Library.Infrastructure.Data;
+using Library.Infrastructure.Data.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +14,10 @@ namespace Library.Infrastructure
     {
         public static void RegisterInfrastructureServices(this IServiceCollection services)
         {
-            //services.Add.
-            //    ..
-            //    ..
-            //    ..
+            services.AddDbContext<LibraryContext>(ServiceLifetime.Transient);
 
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IDvdRepository, DvdRepository>();
         }
     }
 }

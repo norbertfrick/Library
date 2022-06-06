@@ -3,9 +3,6 @@ using Library.UI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-//var app = new Application("LibraryApp");
+var app = new Application("LibraryApp");
 
-
-Console.WriteLine(connectionString);
-
-
+app.Run();

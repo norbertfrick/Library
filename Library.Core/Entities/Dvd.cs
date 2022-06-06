@@ -14,5 +14,10 @@ namespace Library.Core.Entities
 
         [Required]
         public int NumberOfChapters { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name:{this.Name} - Author:{this.Author} - Number of chapters:{this.NumberOfChapters} - Length:{this.LengthInMinutes}min - Avaiable copies:{this.AvailableCopies}";
+        }
     }
 }

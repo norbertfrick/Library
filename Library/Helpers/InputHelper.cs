@@ -43,8 +43,20 @@ namespace Library.UI.Helpers
             return ReadInt(minValue, maxValue);
         }
 
+        public static ConsoleKeyInfo ReadKey(string prompt)
+        {
+            OutputHelper.WriteLine(prompt);
+            return Console.ReadKey();
+        }
+
         public static string ReadString()
         {
+            return Console.ReadLine();
+        }
+
+        public static string ReadString(string prompt)
+        {
+            Console.Write(prompt);
             return Console.ReadLine();
         }
 

@@ -18,6 +18,7 @@ namespace Library.UI
         {
             Name = name;
             Callback = callback;
+            Ordinal = ordinal;
         }
 
 

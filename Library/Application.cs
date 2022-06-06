@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Library.Core;
 using Library.Infrastructure;
+using Library.UI.Pages;
 
 namespace Library.UI
 {
@@ -21,6 +22,11 @@ namespace Library.UI
             Pages = new Dictionary<Type, PageBase>();
             History = new Stack<PageBase>();
 
+            BuildConfigurations();
+
+            BuildServices();
+
+            BuildPages();
         }
         
         protected string Title { get; set; }
@@ -43,7 +49,17 @@ namespace Library.UI
 
         }
 
-        internal IServiceCollection Services { get; set; }
+        internal void AddPage(PageBase page)
+        {
+            Type pageType = page.GetType();
+
+            if (Pages.ContainsKey(pageType))
+                Pages[pageType] = page;
+            else
+                Pages.Add(pageType, page);
+        }
+
+        internal IServiceProvider Services { get; set; }
 
         internal T NavigateTo<T>() where T: PageBase
         {
@@ -65,15 +81,22 @@ namespace Library.UI
 
         }
 
+        internal PageBase NavigateBack()
+        {
+            History.Pop();
+
+            Console.Clear();
+            CurrentPage.Display();
+
+            return CurrentPage;
+        }
+
         public int Run()
         {
-            BuildConfigurations();
-
-            BuildServices();
-
             try
             {
                 Console.Title = Title;
+                SetPage<MainPage>();
 
                 CurrentPage.Display();
 
@@ -86,6 +109,26 @@ namespace Library.UI
 
             }
 
+        }
+
+        internal T SetPage<T>() where T : PageBase
+        {
+            Type pageType = typeof(T);
+
+            if (CurrentPage != null && CurrentPage.GetType() == pageType)
+                return CurrentPage as T;
+
+            // leave the current page
+
+            // select the new page
+            PageBase nextPage;
+            if (!Pages.TryGetValue(pageType, out nextPage))
+                throw new KeyNotFoundException($"The given page {pageType.Name} was not present in the program");
+
+            // enter the new page
+            History.Push(nextPage);
+
+            return CurrentPage as T;
         }
 
         private void BuildConfigurations()
@@ -105,7 +148,18 @@ namespace Library.UI
             serviceProvider.RegisterCoreServices();
             serviceProvider.RegisterInfrastructureServices();
 
-            this.Services = serviceProvider;
+            this.Services = serviceProvider.BuildServiceProvider();
+        }
+
+        private void BuildPages()
+        {
+            this.AddPage(new MainPage(this));
+
+            //Titles
+            this.AddPage(new TitlesPage(this));
+            this.AddPage(new AddTitlePage(this));
+            this.AddPage(new RemoveTitlePage(this));
+            this.AddPage(new AllTitlesPage(this));
         }
 
     }

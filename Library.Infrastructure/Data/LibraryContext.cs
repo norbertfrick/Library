@@ -1,10 +1,6 @@
 ﻿using Library.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.Infrastructure.Data
 {
@@ -12,14 +8,14 @@ namespace Library.Infrastructure.Data
     {
         public LibraryContext(): base()
         {
-            //this._connectionString = connectionString;
         }
-
-        private string _connectionString = @"Server=N-PC\SQLEXPRESS;Database=LibraryDb;Trusted_Connection=True;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString, b => b.MigrationsAssembly("Library.Infrastructure"));
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Library.Infrastructure"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

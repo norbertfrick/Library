@@ -20,7 +20,7 @@ namespace Library.UI
         {
             foreach (var option in Options)
             {
-                OutputHelper.WriteLine($"${option.Ordinal} - {option.Name}");
+                OutputHelper.WriteLine($"{option.Ordinal} - {option.Name}");
             }
 
             int choice = InputHelper.ReadInt("Choose an option:", 1, Options.Count);
