@@ -40,7 +40,7 @@ namespace Library.UI.Pages
             var sb = new StringBuilder();
 
             foreach (var title in titles)
-                sb.AppendLine(Title.ToString());
+                sb.AppendLine(title.ToString());
 
             OutputHelper.WriteLine(sb.ToString());
             InputHelper.ReadKey($"{Environment.NewLine}Press any key to return to Titles menu...");

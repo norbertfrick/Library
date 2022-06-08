@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace Library.Core.Abstractions
         void Update(int id, T entity);
 
         T Create(T entity);
+
+        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
 
     }
 }

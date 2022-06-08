@@ -16,7 +16,7 @@ namespace Library.Core.Entities
 
         public override string ToString()
         {
-            return $"Name:{this.Name} - Author:{this.Author} - ISBN:{this.ISBN} - Number of pages:{this.NumberOfPages} - Avaiable copies:{this.AvailableCopies}";
+            return $"Name: {this.Name} - Author: {this.Author} - ISBN: {this.ISBN} - Number of pages: {this.NumberOfPages} - Avaiable copies: {this.AvailableCopies}";
         }
     }
 }

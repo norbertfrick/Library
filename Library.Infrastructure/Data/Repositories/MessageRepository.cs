@@ -3,6 +3,7 @@ using Library.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,11 @@ namespace Library.Infrastructure.Data.Repositories
         }
 
         public Message Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Message> Find(Expression<Func<Message, bool>> expression)
         {
             throw new NotImplementedException();
         }

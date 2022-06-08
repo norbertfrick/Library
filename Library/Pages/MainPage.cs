@@ -20,6 +20,7 @@ namespace Library.UI.Pages
         private void InitializeMenuOptions()
         {
             this.Menu.Add(1, "Titles", () => this.Application.NavigateTo<TitlesPage>());
+            this.Menu.Add(2, "Exit", () => this.Application.Exit());
 
         }
 

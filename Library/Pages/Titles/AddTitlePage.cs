@@ -73,14 +73,16 @@ namespace Library.UI.Pages
                 if (result is null)
                     OutputHelper.WriteLine("Book not added.");
                 else OutputHelper.WriteLine("Book added successfully.");
+
+                
             }
             catch (Exception ex)
             {
                 OutputHelper.WriteLine("Book not added.");
-                InputHelper.ReadKey("Press any key to continue...");
             }
             finally
             {
+                InputHelper.ReadKey("Press any key to continue...");
                 this.Application.NavigateBack();
             }
         }
@@ -98,11 +100,22 @@ namespace Library.UI.Pages
             dvd.NumberOfChapters = numberOfChapters;
             dvd.LengthInMinutes = length;
 
-            var result = _dvdRepository.Create(dvd);
+            try
+            {
+                var result = _dvdRepository.Create(dvd);
 
-            if (result is null)
+                if (result is null)
+                    OutputHelper.WriteLine("Dvd not added.");
+                else OutputHelper.WriteLine("Dvd added successfully.");
+            }
+            catch(Exception ex)
+            {
                 OutputHelper.WriteLine("Dvd not added.");
-            else OutputHelper.WriteLine("Dvd added successfully.");
+            }
+            finally
+            {
+                InputHelper.ReadKey("Press any key to continue...");
+            }
 
             this.Application.NavigateBack();
         }

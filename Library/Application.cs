@@ -39,6 +39,8 @@ namespace Library.UI
 
         internal IConfiguration Configuration { get; set; }
 
+        internal IServiceProvider Services { get; set; }
+
         internal void NavigateHome()
         {
             while (History.Count > 1)
@@ -59,7 +61,6 @@ namespace Library.UI
                 Pages.Add(pageType, page);
         }
 
-        internal IServiceProvider Services { get; set; }
 
         internal T NavigateTo<T>() where T: PageBase
         {
@@ -160,6 +161,11 @@ namespace Library.UI
             this.AddPage(new AddTitlePage(this));
             this.AddPage(new RemoveTitlePage(this));
             this.AddPage(new AllTitlesPage(this));
+        }
+
+        public void Exit()
+        {
+            Environment.Exit(0);
         }
 
     }

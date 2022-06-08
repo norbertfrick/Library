@@ -3,6 +3,7 @@ using Library.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,27 +20,46 @@ namespace Library.Infrastructure.Data.Repositories
 
         public Book Create(Book entity)
         {
-            throw new NotImplementedException();
+            var result = this._context.Book.Add(entity);
+            this._context.SaveChanges();
+
+            return result.Entity;
         }
 
         public Book Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = this._context.Book.FirstOrDefault(b => b.Id == id);
+
+            if (entity == null) return null;
+
+            var result = this._context.Book.Remove(entity);
+            this._context.SaveChanges();
+
+            return result.Entity;
         }
 
         public IEnumerable<Book> GetAll()
         {
-            throw new NotImplementedException();
+            return this._context.Book;
         }
 
         public Book GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = this._context.Book.FirstOrDefault(b => b.Id == id);
+
+            return result;
         }
 
         public void Update(int id, Book entity)
         {
-            throw new NotImplementedException();
+            this._context.Book.Update(entity);
+            
+            this._context.SaveChanges();
+        }
+
+        public IEnumerable<Book> Find(Expression<Func<Book, bool>> expression)
+        {
+            return this._context.Book.Where(expression);
         }
     }
 }
