@@ -28,7 +28,7 @@ namespace Library.Infrastructure.Data.Repositories
 
         public Book Delete(int id)
         {
-            var entity = this._context.Book.FirstOrDefault(b => b.Id == id);
+            var entity = this.GetById(id);
 
             if (entity == null) return null;
 

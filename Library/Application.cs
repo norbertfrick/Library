@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Library.Core;
 using Library.Infrastructure;
 using Library.UI.Pages;
+using Library.UI.Pages.Members;
 
 namespace Library.UI
 {
@@ -161,6 +162,12 @@ namespace Library.UI
             this.AddPage(new AddTitlePage(this));
             this.AddPage(new RemoveTitlePage(this));
             this.AddPage(new AllTitlesPage(this));
+
+            //Members
+            this.AddPage(new MembersPage(this));
+            this.AddPage(new AllMembersPage(this));
+            this.AddPage(new AddMemberPage(this));
+            this.AddPage(new RemoveMemberPage(this));
         }
 
         public void Exit()

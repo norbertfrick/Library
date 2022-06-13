@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,13 +66,19 @@ namespace Library.UI.Helpers
             string input = Console.ReadLine();
             DateTime value;
 
-            while (!DateTime.TryParse(input,out value))
+            while (!DateTime.TryParse(input, out value))
             {
                 OutputHelper.WriteLine("Please enter a valid value.");
                 input = Console.ReadLine();
             }
 
             return value;
+        }
+
+        public static DateTime ReadDateTime(string prompt)
+        {
+            OutputHelper.WriteLine(prompt);
+            return ReadDateTime();
         }
 
     }

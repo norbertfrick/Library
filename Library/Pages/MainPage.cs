@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.UI.Base;
 using Library.UI.Helpers;
+using Library.UI.Pages.Members;
 
 namespace Library.UI.Pages
 {
@@ -20,7 +21,8 @@ namespace Library.UI.Pages
         private void InitializeMenuOptions()
         {
             this.Menu.Add(1, "Titles", () => this.Application.NavigateTo<TitlesPage>());
-            this.Menu.Add(2, "Exit", () => this.Application.Exit());
+            this.Menu.Add(2, "Members", () => this.Application.NavigateTo<MembersPage>());
+            this.Menu.Add(3, "Exit", () => this.Application.Exit());
 
         }
 

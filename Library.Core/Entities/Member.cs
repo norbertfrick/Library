@@ -19,5 +19,10 @@ namespace Library.Core.Entities
         public string PersonalId { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName} - Date of birth: {DateOfBirth.ToShortDateString()} - Personal Id: {PersonalId}";
+        }
     }
 }

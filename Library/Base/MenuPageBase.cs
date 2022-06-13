@@ -17,6 +17,7 @@ namespace Library.UI.Base
 
         public override void Display()
         {
+            Console.Clear();
             base.Display();
         }
     }

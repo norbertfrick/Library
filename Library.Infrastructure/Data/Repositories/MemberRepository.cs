@@ -11,34 +11,56 @@ namespace Library.Infrastructure.Data.Repositories
 {
     public class MemberRepository : IMemberRepository
     {
+        private readonly LibraryContext _context;
+
+        public MemberRepository(LibraryContext context)
+        {
+            this._context = context;
+        }
+
         public Member Create(Member entity)
         {
-            throw new NotImplementedException();
+            var member = this._context.Members.Add(entity);
+            
+            this._context.SaveChanges();
+
+            return member.Entity;
         }
 
         public Member Delete(int id)
         {
-            throw new NotImplementedException();
+            var member = this.GetById(id);
+
+            if (member is null) return null;
+
+            var result = this._context.Members.Remove(member);
+            this._context.SaveChanges();
+
+            return result.Entity;
         }
 
         public IEnumerable<Member> Find(Expression<Func<Member, bool>> expression)
         {
-            throw new NotImplementedException();
+            return this._context.Members.Where(expression);
         }
 
         public IEnumerable<Member> GetAll()
         {
-            throw new NotImplementedException();
+            return this._context.Members;
         }
 
         public Member GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = this._context.Members.FirstOrDefault(m => m.Id == id);
+
+            return result;
         }
 
         public void Update(int id, Member entity)
         {
-            throw new NotImplementedException();
+            this._context.Members.Update(entity);
+
+            this._context.SaveChanges();
         }
     }
 }

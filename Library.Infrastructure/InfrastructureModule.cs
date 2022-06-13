@@ -18,6 +18,7 @@ namespace Library.Infrastructure
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IDvdRepository, DvdRepository>();
+            services.AddScoped<IMemberRepository, MemberRepository>();
         }
     }
 }
