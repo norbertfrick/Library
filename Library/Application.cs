@@ -12,6 +12,7 @@ using Library.Core;
 using Library.Infrastructure;
 using Library.UI.Pages;
 using Library.UI.Pages.Members;
+using Library.UI.Pages.Rentals;
 
 namespace Library.UI
 {
@@ -146,9 +147,10 @@ namespace Library.UI
         private void BuildServices()
         {
             var serviceProvider = new ServiceCollection();
+
+            serviceProvider.RegisterInfrastructureServices();
             
             serviceProvider.RegisterCoreServices();
-            serviceProvider.RegisterInfrastructureServices();
 
             this.Services = serviceProvider.BuildServiceProvider();
         }
@@ -168,6 +170,12 @@ namespace Library.UI
             this.AddPage(new AllMembersPage(this));
             this.AddPage(new AddMemberPage(this));
             this.AddPage(new RemoveMemberPage(this));
+
+            //Rentals
+            this.AddPage(new RentalsPage(this));
+            this.AddPage(new AllRentalsPage(this));
+            this.AddPage(new RentATitlePage(this));
+            this.AddPage(new ReturnTitlePage(this));
         }
 
         public void Exit()

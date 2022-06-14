@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Library.Core.Abstractions;
+using Library.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,7 @@ namespace Library.Core
     {
         public static void RegisterCoreServices(this IServiceCollection services)
         {
-            //services.Add.
-            //    ..
-            //    ..
-            //    ..
+            services.AddScoped<IRentalEntryService, RentalEntryService>();
 
         }
     }

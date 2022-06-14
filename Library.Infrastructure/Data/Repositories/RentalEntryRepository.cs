@@ -11,34 +11,55 @@ namespace Library.Infrastructure.Data.Repositories
 {
     public class RentalEntryRepository : IRentalEntryRepository
     {
+        public RentalEntryRepository(LibraryContext context)
+        {
+            _context = context;
+        }
+
+        private readonly LibraryContext _context;
+
         public RentalEntry Create(RentalEntry entity)
         {
-            throw new NotImplementedException();
+            var result = this._context.RentalEntries.Add(entity);
+            this._context.SaveChanges();
+
+            return result.Entity;
         }
 
         public RentalEntry Delete(int id)
         {
-            throw new NotImplementedException();
-        }
+            var entity = this.GetById(id);
 
-        public IEnumerable<RentalEntry> Find(Expression<Func<RentalEntry, bool>> expression)
-        {
-            throw new NotImplementedException();
+            if (entity == null) return null;
+
+            var result = this._context.RentalEntries.Remove(entity);
+            this._context.SaveChanges();
+
+            return result.Entity;
         }
 
         public IEnumerable<RentalEntry> GetAll()
         {
-            throw new NotImplementedException();
+            return this._context.RentalEntries;
         }
 
         public RentalEntry GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = this._context.RentalEntries.FirstOrDefault(b => b.Id == id);
+
+            return result;
         }
 
         public void Update(int id, RentalEntry entity)
         {
-            throw new NotImplementedException();
+            this._context.RentalEntries.Update(entity);
+
+            this._context.SaveChanges();
+        }
+
+        public IEnumerable<RentalEntry> Find(Expression<Func<RentalEntry, bool>> expression)
+        {
+            return this._context.RentalEntries.Where(expression);
         }
     }
 }

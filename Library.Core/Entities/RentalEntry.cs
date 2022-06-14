@@ -21,10 +21,13 @@ namespace Library.Core.Entities
         [Required]
         public int TitleId { get; set; }
         
-        [Required]
         public int TimesProlongued { get; set; }
         
-        
         public bool IsReturned => this.ReturnDate is not null;
+
+        public override string ToString()
+        {
+            return $"{Title.Name} - {Title.Author} - Rented on: {RentedDate.ToShortDateString()} - Returned: {(!IsReturned ? "NOT RETURNED" : ReturnDate.Value.ToShortDateString())} - Times prolongued: {TimesProlongued}";
+        }
     }
 }
