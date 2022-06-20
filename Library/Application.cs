@@ -13,6 +13,7 @@ using Library.Infrastructure;
 using Library.UI.Pages;
 using Library.UI.Pages.Members;
 using Library.UI.Pages.Rentals;
+using Library.UI.Pages.Rentals.Queue;
 
 namespace Library.UI
 {
@@ -136,17 +137,16 @@ namespace Library.UI
 
         private void BuildConfigurations()
         {
-            var config = new ConfigurationBuilder()
+            this.Configuration = new ConfigurationBuilder()
             .AddJsonFile("appSettings.json")
             .AddEnvironmentVariables()
             .Build();
-
-            this.Configuration = Configuration;
         }
 
         private void BuildServices()
         {
             var serviceProvider = new ServiceCollection();
+            serviceProvider.AddSingleton(this.Configuration);
 
             serviceProvider.RegisterInfrastructureServices();
             
@@ -176,6 +176,8 @@ namespace Library.UI
             this.AddPage(new AllRentalsPage(this));
             this.AddPage(new RentATitlePage(this));
             this.AddPage(new ReturnTitlePage(this));
+            this.AddPage(new PastDueRentalsPage(this));
+            this.AddPage(new QueuePage(this));
         }
 
         public void Exit()

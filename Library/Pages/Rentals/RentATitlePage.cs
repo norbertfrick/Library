@@ -1,4 +1,5 @@
 ﻿using Library.Core.Abstractions;
+using Library.Core.Abstractions.Services;
 using Library.Core.Entities;
 using Library.UI.Base;
 using Library.UI.Helpers;
@@ -20,6 +21,7 @@ namespace Library.UI.Pages.Rentals
             this._memberRepository = app.Services.GetService<IMemberRepository>();
             this._bookRepository = app.Services.GetService<IBookRepository>();
             this._dvdRepository = app.Services.GetService<IDvdRepository>();
+            this._queueService = app.Services.GetService<IQueueService>();
 
             InitializeMenu();
         }
@@ -31,6 +33,8 @@ namespace Library.UI.Pages.Rentals
         private readonly IBookRepository _bookRepository;
         
         private readonly IDvdRepository _dvdRepository;
+
+        private readonly IQueueService _queueService;
 
         private Menu _chooseTitleMenu = new Menu();
 
@@ -48,7 +52,6 @@ namespace Library.UI.Pages.Rentals
             {
                 var member = members[i];
                 _chooseMemberMenu.Add(i + 1, members[i].ToString(), () => this._choosenMember = member);
-
             }
 
 
@@ -57,7 +60,7 @@ namespace Library.UI.Pages.Rentals
             for (int i = 0; i < titles.Count; i++)
             {
                 var title = titles[i];
-                _chooseMemberMenu.Add(i + 1, titles[i].ToString(), () => this._choosenTitle = title);
+                _chooseTitleMenu.Add(i + 1, titles[i].ToString(), () => this._choosenTitle = title);
 
             }
         }
@@ -97,10 +100,16 @@ namespace Library.UI.Pages.Rentals
 
         private void RentATitle()
         {
-            //check title availability
-
             var title = this._choosenTitle;
             var member = this._choosenMember;
+
+            //check title availability
+            if (!IsTitleAvailable(title))
+            {
+                ShowQueuePrompt(title, member);
+
+                this.Application.NavigateBack();
+            }
 
             var result = _rentalEntryService.Rent(title, member);
 
@@ -110,6 +119,31 @@ namespace Library.UI.Pages.Rentals
             }
             else OutputHelper.WriteLine("Title rented successfully.", ConsoleColor.Green);
 
+        }
+
+        private bool IsTitleAvailable(Title title)
+        {
+            var isBook = title is Book ? true : false;
+
+            return isBook ? this._bookRepository.IsBookAvailable(title.Id) : this._dvdRepository.IsDvdAvailable(title.Id);
+        }
+
+        private void ShowQueuePrompt(Title title, Member member)
+        {
+            var menu = new Menu();
+
+            menu.Add(1, "Yes", () => AddToQueue(title, member));
+            menu.Add(2, "No", () => { return;});
+
+            OutputHelper.WriteLine("Do you want to add your inquiry to the queue?");
+            menu.Display();
+        }
+        
+        private bool AddToQueue(Title title, Member member)
+        {
+            var result = this._queueService.AddToQueue(title, member);
+
+            return result is not null;
         }
 
     }

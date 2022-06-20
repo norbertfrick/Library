@@ -62,5 +62,15 @@ namespace Library.Infrastructure.Data.Repositories
 
             this._context.SaveChanges();
         }
+
+        public bool IsDvdAvailable(int id)
+        {
+            var entity = GetById(id);
+
+            if (entity.AvailableCopies > 0)
+                return true;
+            else return false;
+
+        }
     }
 }

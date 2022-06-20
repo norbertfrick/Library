@@ -1,5 +1,6 @@
 ﻿using Library.Core.Abstractions;
 using Library.UI.Base;
+using Library.UI.Pages.Rentals.Queue;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,9 @@ namespace Library.UI.Pages.Rentals
             this.Menu.Add(1, "Rent a title", () => this.Application.NavigateTo<RentATitlePage>());
             this.Menu.Add(2, "Return a title", () => this.Application.NavigateTo<ReturnTitlePage>());
             this.Menu.Add(3, "Show all rentals", () => this.Application.NavigateTo<AllRentalsPage>());
-            this.Menu.Add(4, "Back", () => this.Application.NavigateBack());
+            this.Menu.Add(4, "Show rentals past due", () => this.Application.NavigateTo<PastDueRentalsPage>());
+            this.Menu.Add(5, "Show Queue", () => this.Application.NavigateTo<QueuePage>());
+            this.Menu.Add(6, "Back", () => this.Application.NavigateBack());
         }
 
         public override void Display()

@@ -20,6 +20,7 @@ namespace Library.Infrastructure
             services.AddScoped<IDvdRepository, DvdRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IRentalEntryRepository, RentalEntryRepository>();
+            services.AddScoped<IQueueItemRepository, QueueItemRepository>();
         }
     }
 }

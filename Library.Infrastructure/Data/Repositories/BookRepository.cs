@@ -61,5 +61,15 @@ namespace Library.Infrastructure.Data.Repositories
         {
             return this._context.Book.Where(expression);
         }
+
+        public bool IsBookAvailable(int id)
+        {
+            var entity = GetById(id);
+
+            if (entity.AvailableCopies > 0)
+                return true;
+            else return false;
+
+        }
     }
 }

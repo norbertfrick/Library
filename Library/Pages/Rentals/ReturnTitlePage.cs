@@ -43,6 +43,8 @@ namespace Library.UI.Pages.Rentals
             _chooseTitleMenu.Display();
 
             InputHelper.ReadKey("Press any key to return to Rental page...");
+
+            this.Application.NavigateBack();
         }
 
 
@@ -51,23 +53,39 @@ namespace Library.UI.Pages.Rentals
             var members = GetAllMembers();
 
             for (var i = 0; i < members.Count; i++)
-                _chooseMemberMenu.Add(i + 1, members[i].ToString(), () => InitializeRentEntriesMenu(members[i]));
+            {
+                var member = members[i];
+                _chooseMemberMenu.Add(i + 1, members[i].ToString(), () => InitializeRentEntriesMenu(member));
+            }
 
         }
 
         private void InitializeRentEntriesMenu(Member member)
         {
-            var rentEntries = this._rentEntryService.GetByMember(member.Id);
+            var rentEntries = this._rentEntryService.GetByUnreturnedMember(member.Id);
 
             for (var i = 0; i < rentEntries.Count; i++)
-                _chooseMemberMenu.Add(i + 1, rentEntries[i].ToString(), () => ReturnTitle(rentEntries[i]));
+            {
+                var entry = rentEntries[i];
+                _chooseTitleMenu.Add(i + 1, rentEntries[i].ToString(), () => ReturnTitle(entry));
+
+            }
         }
 
         private void ReturnTitle(RentalEntry entry)
         {
             //isLateCheck
+            if (this._rentEntryService.IsEntryPastDue(entry))
+            {
+                OutputHelper.WriteLine("You are late with the returning of this title!", ConsoleColor.Red);
 
-            //feeCalculation
+                //feeCalculation
+                var fee = this._rentEntryService.CalculateReturnalFee(entry);
+
+                OutputHelper.WriteLine($"The fee for your late returnal is: {fee}Euro", ConsoleColor.Red);
+
+                InputHelper.ReadKey("Press any key to continue...");
+            }
 
             var result = this._rentEntryService.Return(entry);
 

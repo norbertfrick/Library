@@ -15,6 +15,12 @@ namespace Library.Core.Abstractions
 
         RentalEntry Return(RentalEntry entry);
 
-        List<RentalEntry> GetByMember(int memberId);
+        List<RentalEntry> GetByUnreturnedMember(int memberId);
+
+        decimal CalculateReturnalFee(RentalEntry entry);
+
+        List<RentalEntry> GetRentalEntriesPastDue();
+
+        bool IsEntryPastDue(RentalEntry entry);
     }
 }

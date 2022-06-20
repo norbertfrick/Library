@@ -1,4 +1,5 @@
 ﻿using Library.Core.Base;
+using Library.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +16,7 @@ namespace Library.Core.Entities
         public int MemberId { get; set; }
         [Required]
         public DateTime RentedDate { get; set; }
-        [Required]
+        
         public DateTime? ReturnDate { get; set; }
         public Title Title { get; set; }
         [Required]
@@ -25,9 +26,12 @@ namespace Library.Core.Entities
         
         public bool IsReturned => this.ReturnDate is not null;
 
+        public eTitleType TitleType { get; set; }
+
         public override string ToString()
         {
-            return $"{Title.Name} - {Title.Author} - Rented on: {RentedDate.ToShortDateString()} - Returned: {(!IsReturned ? "NOT RETURNED" : ReturnDate.Value.ToShortDateString())} - Times prolongued: {TimesProlongued}";
+            return $"{Title.Name} - {Title.Author} - Rented on: {RentedDate.ToShortDateString()} - Rented by: {Member.FirstName} {Member.LastName}" +
+                $" -  Returned: {(!IsReturned ? "NOT RETURNED" : ReturnDate.Value.ToShortDateString())} - Times prolongued: {TimesProlongued}";
         }
     }
 }

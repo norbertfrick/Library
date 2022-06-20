@@ -1,5 +1,6 @@
 ﻿using Library.Core.Abstractions;
 using Library.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace Library.Infrastructure.Data.Repositories
 
         public IEnumerable<RentalEntry> GetAll()
         {
-            return this._context.RentalEntries;
+            return this._context.RentalEntries.Include(e => e.Title).Include(e => e.Member);
         }
 
         public RentalEntry GetById(int id)
@@ -59,7 +60,7 @@ namespace Library.Infrastructure.Data.Repositories
 
         public IEnumerable<RentalEntry> Find(Expression<Func<RentalEntry, bool>> expression)
         {
-            return this._context.RentalEntries.Where(expression);
+            return this._context.RentalEntries.Where(expression).Include(e => e.Title).Include(e => e.Member);
         }
     }
 }

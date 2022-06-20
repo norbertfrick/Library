@@ -1,4 +1,5 @@
 ﻿using Library.Core.Abstractions;
+using Library.Core.Abstractions.Services;
 using Library.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +15,7 @@ namespace Library.Core
         public static void RegisterCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IRentalEntryService, RentalEntryService>();
-
+            services.AddScoped<IQueueService, QueueService>();
         }
     }
 }
