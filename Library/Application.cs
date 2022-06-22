@@ -148,7 +148,7 @@ namespace Library.UI
             var serviceProvider = new ServiceCollection();
             serviceProvider.AddSingleton(this.Configuration);
 
-            serviceProvider.RegisterInfrastructureServices();
+            serviceProvider.RegisterInfrastructureServices(this.Configuration);
             
             serviceProvider.RegisterCoreServices();
 

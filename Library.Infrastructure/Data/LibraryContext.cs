@@ -10,12 +10,13 @@ namespace Library.Infrastructure.Data
         {
         }
 
+        public LibraryContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Library.Infrastructure"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

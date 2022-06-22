@@ -1,6 +1,8 @@
 ﻿using Library.Core.Abstractions;
 using Library.Infrastructure.Data;
 using Library.Infrastructure.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,9 @@ namespace Library.Infrastructure
 {
     public static class InfrastructureModule
     {
-        public static void RegisterInfrastructureServices(this IServiceCollection services)
+        public static void RegisterInfrastructureServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<LibraryContext>(ServiceLifetime.Transient);
+            services.AddDbContext<LibraryContext>((options)=> options.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Library.Infrastructure")), ServiceLifetime.Transient);
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IDvdRepository, DvdRepository>();
