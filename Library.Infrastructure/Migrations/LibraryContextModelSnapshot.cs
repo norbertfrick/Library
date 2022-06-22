@@ -93,6 +93,9 @@ namespace Library.Infrastructure.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TimeAdded")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("TitleId")
                         .HasColumnType("int");
 
@@ -126,6 +129,9 @@ namespace Library.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TitleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TitleType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
