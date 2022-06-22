@@ -31,11 +31,20 @@ namespace Library.UI.Pages
             base.Display();
 
             DisplayAllTitles();
+            
+            InputHelper.ReadKey($"{Environment.NewLine}Press any key to return to Titles menu...");
+            this.Application.NavigateBack();
         }
 
         private void DisplayAllTitles()
         {
             var titles = GetAllTitles();
+
+            if (titles.Count == 0)
+            {
+                OutputHelper.WriteLine("No titles available...");
+                return;
+            }
 
             var sb = new StringBuilder();
 
@@ -43,9 +52,8 @@ namespace Library.UI.Pages
                 sb.AppendLine(title.ToString());
 
             OutputHelper.WriteLine(sb.ToString());
-            InputHelper.ReadKey($"{Environment.NewLine}Press any key to return to Titles menu...");
 
-            this.Application.NavigateBack();
+
         }
 
         private List<Title> GetAllTitles()

@@ -87,7 +87,7 @@ namespace Library.Core.Services
 
         public bool IsEntryPastDue(RentalEntry entry)
         {
-            return DateTime.Now.Date < entry.RentedDate.AddDays(DayToRentDictionary.GetValueOrDefault(entry.TitleType));
+            return DateTime.Now.Date > entry.RentedDate.AddDays(DayToRentDictionary.GetValueOrDefault(entry.TitleType));
         }
 
         public decimal CalculateReturnalFee(RentalEntry entry)
@@ -120,6 +120,26 @@ namespace Library.Core.Services
             var result = _repository.Create(entry);
 
             return result;
+        }
+
+        public bool CanRent(Member member, Title title, out string errorMessage)
+        {
+            var rentedTitles = GetByUnreturnedMember(member.Id);
+
+            if (rentedTitles.Any(t => t.TitleId == title.Id))
+            {
+                errorMessage = $"Title {title.Name} already rented.";
+                return false;
+            }
+
+            if (rentedTitles.Count >= 2)
+            {
+                errorMessage = $"You've already rented 2 titles. You cannot rent any more!";
+                return false;
+            }
+
+            errorMessage = "";
+            return true;
         }
 
         private void UpdateAvailableTitleCopies(Title title, eTitleCountUpdate action)

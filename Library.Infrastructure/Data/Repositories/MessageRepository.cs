@@ -11,34 +11,56 @@ namespace Library.Infrastructure.Data.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
+        private readonly LibraryContext _context;
+
+        public MessageRepository(LibraryContext context)
+        {
+            this._context = context;
+        }
+
         public Message Create(Message entity)
         {
-            throw new NotImplementedException();
+            var member = this._context.Messages.Add(entity);
+
+            this._context.SaveChanges();
+
+            return member.Entity;
         }
 
         public Message Delete(int id)
         {
-            throw new NotImplementedException();
+            var member = this.GetById(id);
+
+            if (member is null) return null;
+
+            var result = this._context.Messages.Remove(member);
+            this._context.SaveChanges();
+
+            return result.Entity;
         }
 
         public IEnumerable<Message> Find(Expression<Func<Message, bool>> expression)
         {
-            throw new NotImplementedException();
+            return this._context.Messages.Where(expression);
         }
 
         public IEnumerable<Message> GetAll()
         {
-            throw new NotImplementedException();
+            return this._context.Messages;
         }
 
         public Message GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = this._context.Messages.FirstOrDefault(m => m.Id == id);
+
+            return result;
         }
 
         public void Update(int id, Message entity)
         {
-            throw new NotImplementedException();
+            this._context.Messages.Update(entity);
+
+            this._context.SaveChanges();
         }
     }
 }

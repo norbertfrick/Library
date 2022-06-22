@@ -16,6 +16,7 @@ namespace Library.Core
         {
             services.AddScoped<IRentalEntryService, RentalEntryService>();
             services.AddScoped<IQueueService, QueueService>();
+            services.AddScoped<IMessagingService, MessagingService>();
         }
     }
 }

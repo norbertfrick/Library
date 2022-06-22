@@ -37,7 +37,7 @@ namespace Library.UI.Pages.Rentals
             OutputHelper.WriteLine("Choose a member: ", ConsoleColor.Blue);
             _chooseMemberMenu.Display();
 
-            Console.Clear();
+            OutputHelper.Clear();
             OutputHelper.WriteLine("Select a title to return:", ConsoleColor.Blue);
             
             _chooseTitleMenu.Display();

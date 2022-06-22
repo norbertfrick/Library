@@ -35,6 +35,8 @@ namespace Library.UI.Pages
 
         private void AddTitle(eTitleType titleType)
         {
+            OutputHelper.Clear();
+
             var author = InputHelper.ReadString("Enter author's name:");
             var titleName = InputHelper.ReadString("Enter title's name:");
             var numberOfCopies = InputHelper.ReadInt("Enter number of available copies:", 1, int.MaxValue);

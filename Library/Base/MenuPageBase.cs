@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.UI.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Library.UI.Base
 
         public override void Display()
         {
-            Console.Clear();
+            OutputHelper.Clear();
             base.Display();
         }
     }

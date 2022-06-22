@@ -23,6 +23,7 @@ namespace Library.Infrastructure
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IRentalEntryRepository, RentalEntryRepository>();
             services.AddScoped<IQueueItemRepository, QueueItemRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
         }
     }
 }

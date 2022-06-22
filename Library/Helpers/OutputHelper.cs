@@ -14,5 +14,10 @@ namespace Library.UI.Helpers
             Console.WriteLine(value);
             Console.ResetColor();
         }
+
+        public static void Clear()
+        {
+            Console.Clear();
+        }
     }
 }

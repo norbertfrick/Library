@@ -72,7 +72,7 @@ namespace Library.UI.Pages.Rentals
             OutputHelper.WriteLine("Choose a member to rent to:", ConsoleColor.Blue);
             this._chooseMemberMenu.Display();
 
-            Console.Clear();
+            OutputHelper.Clear();
 
             OutputHelper.WriteLine("Choose a title to rent to:", ConsoleColor.Blue);
             this._chooseTitleMenu.Display();
@@ -102,6 +102,12 @@ namespace Library.UI.Pages.Rentals
         {
             var title = this._choosenTitle;
             var member = this._choosenMember;
+
+            if (!_rentalEntryService.CanRent(member, title, out var error))
+            {
+                OutputHelper.WriteLine(error);
+                return;
+            }
 
             //check title availability
             if (!IsTitleAvailable(title))

@@ -22,5 +22,7 @@ namespace Library.Core.Abstractions
         List<RentalEntry> GetRentalEntriesPastDue();
 
         bool IsEntryPastDue(RentalEntry entry);
+
+        bool CanRent(Member member, Title title, out string errorMessage);
     }
 }

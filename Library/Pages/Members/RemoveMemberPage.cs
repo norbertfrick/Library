@@ -59,8 +59,10 @@ namespace Library.UI.Pages.Members
             var members = GetMembers();
 
             for(int index = 0; index < members.Count; index++)
-                this.Menu.Add(new Option(index + 1, members[index].ToString(), () => this.DeleteMember(members[index])));
-
+            {
+                var member = members[index];
+                this.Menu.Add(new Option(index + 1, members[index].ToString(), () => this.DeleteMember(member)));
+            }
         }
 
         private List<Member> GetMembers()

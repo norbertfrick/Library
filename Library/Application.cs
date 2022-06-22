@@ -14,6 +14,7 @@ using Library.UI.Pages;
 using Library.UI.Pages.Members;
 using Library.UI.Pages.Rentals;
 using Library.UI.Pages.Rentals.Queue;
+using Library.UI.Pages.Messages;
 
 namespace Library.UI
 {
@@ -49,7 +50,7 @@ namespace Library.UI
             while (History.Count > 1)
                 History.Pop();
 
-            Console.Clear();
+            OutputHelper.Clear();
             CurrentPage.Display();
 
         }
@@ -77,7 +78,7 @@ namespace Library.UI
 
             History.Push(nextPage);
             
-            Console.Clear();
+            OutputHelper.Clear();
             
             CurrentPage.Display();
 
@@ -89,7 +90,7 @@ namespace Library.UI
         {
             History.Pop();
 
-            Console.Clear();
+            OutputHelper.Clear();
             CurrentPage.Display();
 
             return CurrentPage;
@@ -178,6 +179,9 @@ namespace Library.UI
             this.AddPage(new ReturnTitlePage(this));
             this.AddPage(new PastDueRentalsPage(this));
             this.AddPage(new QueuePage(this));
+
+            //Messages
+            this.AddPage(new MessagesPage(this));
         }
 
         public void Exit()

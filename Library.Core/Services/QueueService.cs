@@ -9,9 +9,12 @@ namespace Library.Core.Services
     {
         private readonly IQueueItemRepository _repository;
 
-        public QueueService(IQueueItemRepository repo)
+        private readonly IMessagingService _messagingService;
+
+        public QueueService(IQueueItemRepository repo, IMessagingService messagingService)
         {
             this._repository = repo;
+            this._messagingService = messagingService;
         }
 
         public QueueItem AddToQueue(Title title, Member member)
@@ -39,10 +42,25 @@ namespace Library.Core.Services
 
         public void OnTitleReturned(object sender, TitleReturnedEventArgs args)
         {
-            var queueItems = _repository.Find(i => i.TitleId == args.Title.Id && i.IsResolved == false);
-            var title = queueItems.OrderBy(i => i.TimeAdded).LastOrDefault();
+            var queueItems = _repository.Find(i => i.TitleId == args.Title.Id && i.IsResolved == false).ToList();
 
-            MarkAsResolved(title);
+            if(queueItems is not null && queueItems.Count() > 0)
+            {
+                var title = queueItems.OrderBy(i => i.TimeAdded).LastOrDefault();
+
+                //send message to member
+                NotifyMember(title);
+
+                MarkAsResolved(title);
+            }
+        }
+
+        private void NotifyMember(QueueItem item)
+        {
+            var subject = $"Title {item.Title.Name} available!";
+            var message = $"Dear Mr/Mrs {item.Member.LastName},{Environment.NewLine}\tthe title {item.Title.Name} is available for rent!{Environment.NewLine}Best regards,\t The Library Team <3";
+            
+            _messagingService.SendMessage(item.MemberId, subject, message);
         }
     }
 }
